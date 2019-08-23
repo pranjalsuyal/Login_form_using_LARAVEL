@@ -16,9 +16,7 @@ class loginController extends BaseController
     public function login(Request $req){
       $username = $req->input('username');
       $password = $req->input('password');
-
-      $hashed_password =password_hash($password, PASSWORD_DEFAULT); //crypt($password);
-      $checkLogin = DB::table('users')->where(['username'=>$username,'password'=>$password])->get();
+      $checkLogin = DB::table('users')->where(['username'=>$username,'password'=>sha1($password)])->get();
       if(count($checkLogin)>0){
         $message = array(
           "Name"=>"$username",
@@ -31,7 +29,8 @@ class loginController extends BaseController
         print_r($req->input());
       }
       else{
-        echo "UnSuccessful Login , Details must be wrong";
+        $Errormessage ="UnSuccessful Login , Details must be wrong";
+        return json_encode($Errormessage);
       }
     }
 }
