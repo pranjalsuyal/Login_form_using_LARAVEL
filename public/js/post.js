@@ -36,11 +36,16 @@ $(function(){
         },
         type: "POST",
         success:function(Response){
-          console.log(Response);
           var result = JSON.parse(Response);
-            $('#messages').html(Response);
+          if(result === "UnSuccessful Login , Details must be wrong"){
+          $('#messages').html(result);
+          }
+          else{
+
+            console.log(result);
             $('#messages').html(result.Name);
           }
+        }
       });
     }
   });
